@@ -1,26 +1,256 @@
 @import "tailwindcss";
 
+/* ---------------------------------------------------------------------------
+   Citrana design system — CSS variables (dark default, neon accents)
+   --------------------------------------------------------------------------- */
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  /* Backgrounds — solid, no transparency (no dimming) */
+  --background: 222 14% 8%;
+  --background-elevated: 222 12% 11%;
+  --background-card: 222 12% 10%;
+  --surface: 222 12% 10%;
+  --surface-hover: 222 12% 14%;
+  /* Foreground — full contrast, all text clear */
+  --foreground: 0 0% 98%;
+  --foreground-muted: 0 0% 98%;
+  --foreground-subtle: 0 0% 96%;
+  /* Primary — Citrana Orange */
+  --primary: 25 95% 53%;
+  --primary-foreground: 0 0% 100%;
+  --primary-glow: 25 95% 53% / 0.25;
+  /* Accent — Electric Blue */
+  --accent: 210 100% 56%;
+  --accent-foreground: 0 0% 100%;
+  --accent-glow: 210 100% 56% / 0.2;
+  /* Semantic */
+  --success: 142 76% 42%;
+  --success-glow: 142 76% 42% / 0.25;
+  --warning: 38 92% 50%;
+  --warning-glow: 38 92% 50% / 0.2;
+  --error: 0 72% 51%;
+  --error-glow: 0 72% 51% / 0.25;
+  /* Borders & rings */
+  --border: 220 14% 20%;
+  --border-focus: 25 95% 53%;
+  --ring: 25 95% 53%;
+  /* Radius */
+  --radius: 0.5rem;
+  --radius-lg: 0.75rem;
+  --radius-xl: 1rem;
 }
 
 @theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+  --color-background: hsl(var(--background));
+  --color-foreground: hsl(var(--foreground));
+  --color-primary: hsl(var(--primary));
+  --color-primary-foreground: hsl(var(--primary-foreground));
+  --color-accent: hsl(var(--accent));
+  --color-accent-foreground: hsl(var(--accent-foreground));
+  --color-success: hsl(var(--success));
+  --color-warning: hsl(var(--warning));
+  --color-error: hsl(var(--error));
+  --color-border: hsl(var(--border));
+  --color-surface: hsl(var(--surface));
+  --font-sans: var(--font-sans);
+  --font-mono: var(--font-mono);
+  --radius-sm: calc(var(--radius) - 2px);
+  --radius-md: var(--radius);
+  --radius-lg: var(--radius-lg);
+  --radius-xl: var(--radius-xl);
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
-}
-
+/* ---------------------------------------------------------------------------
+   Base
+   --------------------------------------------------------------------------- */
 body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  background: hsl(var(--background));
+  color: hsl(var(--foreground));
+  font-family: var(--font-body), system-ui, sans-serif;
+  font-feature-settings: "rlig" 1, "calt" 1;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  font-family: var(--font-sans), system-ui, sans-serif;
+  font-weight: 600;
+  letter-spacing: -0.02em;
+  color: hsl(var(--foreground));
+}
+
+/* ---------------------------------------------------------------------------
+   Main content area — solid background, no overlay, no dimming
+   --------------------------------------------------------------------------- */
+.bg-ambient {
+  position: relative;
+  background: hsl(var(--background));
+}
+
+/* ---------------------------------------------------------------------------
+   Cards & panels — solid opaque backgrounds, no blur, clear and readable
+   --------------------------------------------------------------------------- */
+.glass-panel {
+  background: hsl(var(--background-card));
+  border: 1px solid hsl(var(--border));
+  border-radius: var(--radius-lg);
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
+  transition: box-shadow 0.2s ease, border-color 0.2s ease;
+}
+.glass-panel:hover {
+  border-color: hsl(var(--border));
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.25);
+}
+
+.glass-panel-subtle {
+  background: hsl(var(--background-elevated));
+  border: 1px solid hsl(var(--border));
+  border-radius: var(--radius);
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.15);
+}
+
+/* Optional soft glow for CTAs — subtle so it doesn’t look odd */
+.soft-glow-primary {
+  box-shadow: 0 0 12px hsl(var(--primary-glow));
+}
+.soft-glow-success {
+  box-shadow: 0 0 10px hsl(var(--success-glow));
+}
+
+/* Live indicator — subtle pulse, no dimming */
+@keyframes execution-pulse {
+  0%, 100% { box-shadow: 0 0 0 0 hsl(var(--success) / 0.2); }
+  50% { box-shadow: 0 0 8px hsl(var(--success) / 0.15); }
+}
+.execution-pulse {
+  animation: execution-pulse 2s ease-in-out infinite;
+}
+
+/* ---------------------------------------------------------------------------
+   Terminal-style execution feed
+   --------------------------------------------------------------------------- */
+.terminal-feed {
+  font-family: var(--font-mono), ui-monospace, monospace;
+  font-size: 0.8125rem;
+  line-height: 1.5;
+  color: hsl(var(--foreground-muted));
+}
+
+.terminal-line {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.5rem;
+  padding: 0.25rem 0;
+  border-bottom: 1px solid hsl(var(--border) / 0.4);
+}
+
+.terminal-line:last-child {
+  border-bottom: none;
+}
+
+.terminal-timestamp {
+  flex-shrink: 0;
+  color: hsl(var(--foreground-subtle));
+}
+
+.terminal-badge {
+  flex-shrink: 0;
+  padding: 0.125rem 0.375rem;
+  border-radius: 4px;
+  font-size: 0.6875rem;
+  font-weight: 600;
+  text-transform: uppercase;
+}
+
+.terminal-badge--success {
+  background: hsl(var(--success) / 0.2);
+  color: hsl(var(--success));
+}
+
+.terminal-badge--warning {
+  background: hsl(var(--warning) / 0.2);
+  color: hsl(var(--warning));
+}
+
+.terminal-badge--error {
+  background: hsl(var(--error) / 0.2);
+  color: hsl(var(--error));
+}
+
+.terminal-badge--info {
+  background: hsl(var(--accent) / 0.2);
+  color: hsl(var(--accent));
+}
+
+/* ZK badge — very subtle so text stays clear */
+.zk-glow {
+  box-shadow: 0 0 6px hsl(var(--success) / 0.15);
+}
+
+/* Landing page — premium animations */
+@keyframes landing-glow {
+  0%, 100% { opacity: 0.4; transform: scale(1); }
+  50% { opacity: 0.6; transform: scale(1.02); }
+}
+@keyframes landing-float {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-6px); }
+}
+@keyframes landing-shimmer {
+  0% { background-position: -200% 0; }
+  100% { background-position: 200% 0; }
+}
+.landing-glow {
+  animation: landing-glow 4s ease-in-out infinite;
+}
+.landing-float {
+  animation: landing-float 3s ease-in-out infinite;
+}
+.landing-shimmer {
+  background: linear-gradient(90deg, hsl(var(--primary)), hsl(var(--accent)), hsl(var(--primary)));
+  background-size: 200% 100%;
+  animation: landing-shimmer 6s linear infinite;
+}
+@keyframes landing-badge-pulse {
+  0%, 100% { box-shadow: 0 0 0 0 hsl(var(--primary) / 0.2); }
+  50% { box-shadow: 0 0 0 8px hsl(var(--primary) / 0); }
+}
+@keyframes landing-arrow-bounce {
+  0%, 100% { transform: translateX(0); }
+  50% { transform: translateX(4px); }
+}
+.landing-badge-pulse {
+  animation: landing-badge-pulse 2s ease-in-out infinite;
+}
+.landing-arrow-bounce {
+  animation: landing-arrow-bounce 1.5s ease-in-out infinite;
+}
+.landing-section {
+  scroll-margin-top: 2rem;
+}
+
+/* Focus visible for accessibility and polish */
+a:focus-visible,
+button:focus-visible,
+[tabindex]:focus-visible {
+  outline: 2px solid hsl(var(--primary));
+  outline-offset: 2px;
+}
+
+/* Reduced motion */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.05s !important;
+  }
+  .landing-glow,
+  .landing-float,
+  .landing-shimmer,
+  .landing-badge-pulse,
+  .landing-arrow-bounce {
+    animation: none !important;
+  }
 }

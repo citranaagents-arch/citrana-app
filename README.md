@@ -1,36 +1,36 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Citrana MVP Frontend
 
-## Getting Started
+AI Agent Operating System UI — Next.js (App Router), TypeScript, Tailwind, Framer Motion, Zustand.
 
-First, run the development server:
+## Run
 
 ```bash
+npm install
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Open [http://localhost:3000](http://localhost:3000); the app redirects to `/app/dashboard`.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## Routes
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+- `/app/dashboard` — System overview, KPIs, live agent cards, execution timeline
+- `/app/agents` — Agent list with status filter
+- `/app/agents/[id]` — Agent detail (config, logs, ZK badge)
+- `/app/intent-studio` — Natural language intent → structured plan → Deploy
+- `/app/activity` — Live terminal-style execution feed (mock events)
 
-## Learn More
+## Stack
 
-To learn more about Next.js, take a look at the following resources:
+- **Framework:** Next.js 16 (App Router), React 19, TypeScript
+- **UI:** Tailwind v4, CSS variables theme (dark, Citrana orange + electric blue)
+- **Typography:** Space Grotesk (headings), Inter (body), JetBrains Mono (terminal)
+- **Animation:** Framer Motion (route transitions, list stagger, reduced-motion aware)
+- **State:** Zustand; mock realtime events in Activity Monitor
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+## Project layout
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+- `app/` — Root layout, redirect; `app/app/` — OS shell layout and pages
+- `components/os/` — Sidebar, Topbar, NavItem, PageTransition
+- `components/citrana/` — KpiCard, AgentCard, ExecutionTimeline, TerminalFeed, ZkProofBadge, RiskSlider
+- `lib/store/agents.ts` — Agents and execution logs state
+- `lib/mock/events.ts` — Mock activity event stream for Activity Monitor
