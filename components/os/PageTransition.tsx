@@ -31,7 +31,7 @@ export function PageTransition({ children }: { children: React.ReactNode }) {
           ? { duration: 0 }
           : { duration: 0.2, ease: [0.25, 0.46, 0.45, 0.94] }
       }
-      className="min-h-0 flex-1"
+      className="min-h-0 min-w-0 flex-1"
     >
       {children}
     </motion.div>

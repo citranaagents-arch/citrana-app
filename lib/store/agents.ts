@@ -47,6 +47,8 @@ const defaultStats: DashboardStats = {
   gasSaved: "0.42 ETH",
 };
 
+/* Deterministic timestamps (no Date.now) to avoid hydration mismatch between server and client */
+const BASE_MS = 1709251200000; // Fixed epoch for consistent SSR/client output
 const defaultAgents: Agent[] = [
   {
     id: "1",
@@ -55,7 +57,7 @@ const defaultAgents: Agent[] = [
     status: "active",
     executionFrequency: "Every 6h",
     riskLevel: "medium",
-    lastActionAt: new Date(Date.now() - 1000 * 60 * 12).toISOString(),
+    lastActionAt: new Date(BASE_MS - 1000 * 60 * 12).toISOString(),
     metrics: { profit: "+2.4%", outcome: "Rebalanced" },
   },
   {
@@ -65,7 +67,7 @@ const defaultAgents: Agent[] = [
     status: "active",
     executionFrequency: "On trigger",
     riskLevel: "low",
-    lastActionAt: new Date(Date.now() - 1000 * 60 * 2).toISOString(),
+    lastActionAt: new Date(BASE_MS - 1000 * 60 * 2).toISOString(),
     metrics: { outcome: "Swap executed" },
   },
   {
@@ -75,7 +77,7 @@ const defaultAgents: Agent[] = [
     status: "paused",
     executionFrequency: "Daily",
     riskLevel: "low",
-    lastActionAt: new Date(Date.now() - 1000 * 60 * 60 * 24).toISOString(),
+    lastActionAt: new Date(BASE_MS - 1000 * 60 * 60 * 24).toISOString(),
   },
 ];
 
@@ -85,7 +87,7 @@ const defaultLogs: ExecutionLogEntry[] = [
     agentId: "2",
     action: "Swap 0.5 ETH → USDC",
     status: "completed",
-    timestamp: new Date(Date.now() - 1000 * 60 * 2).toISOString(),
+    timestamp: new Date(BASE_MS - 1000 * 60 * 2).toISOString(),
     txHash: "0x…a1b2",
     zkVerified: true,
   },
@@ -94,7 +96,7 @@ const defaultLogs: ExecutionLogEntry[] = [
     agentId: "1",
     action: "Rebalance liquidity positions",
     status: "completed",
-    timestamp: new Date(Date.now() - 1000 * 60 * 12).toISOString(),
+    timestamp: new Date(BASE_MS - 1000 * 60 * 12).toISOString(),
     txHash: "0x…c3d4",
     zkVerified: true,
   },
@@ -103,7 +105,7 @@ const defaultLogs: ExecutionLogEntry[] = [
     agentId: "1",
     action: "Claim staking rewards",
     status: "completed",
-    timestamp: new Date(Date.now() - 1000 * 60 * 45).toISOString(),
+    timestamp: new Date(BASE_MS - 1000 * 60 * 45).toISOString(),
     zkVerified: true,
   },
 ];
