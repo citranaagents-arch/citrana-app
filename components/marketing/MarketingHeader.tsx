@@ -2,13 +2,17 @@
 
 import Link from "next/link";
 import Image from "next/image";
-import { useState, useCallback } from "react";
+import { useState, useCallback, useEffect } from "react";
+import { createPortal } from "react-dom";
 import { motion, AnimatePresence } from "framer-motion";
 import { ArrowRight, Menu, X } from "lucide-react";
 
 export function MarketingHeader() {
   const [mobileOpen, setMobileOpen] = useState(false);
+  const [mounted, setMounted] = useState(false);
   const closeMobile = useCallback(() => setMobileOpen(false), []);
+
+  useEffect(() => setMounted(true), []);
 
   return (
     <header className="relative z-50 flex items-center justify-between gap-4 px-4 py-5 sm:px-6 lg:px-8">
@@ -53,52 +57,55 @@ export function MarketingHeader() {
           {mobileOpen ? <X className="size-5" /> : <Menu className="size-5" />}
         </button>
       </div>
-      <AnimatePresence>
-        {mobileOpen && (
-          <motion.div
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-            transition={{ duration: 0.2 }}
-            className="fixed inset-0 top-[73px] z-40 bg-black/60 md:hidden"
-            aria-hidden
-            onClick={closeMobile}
-          />
+      {mounted &&
+        createPortal(
+          <AnimatePresence>
+            {mobileOpen && (
+              <>
+                <motion.div
+                  initial={{ opacity: 0 }}
+                  animate={{ opacity: 1 }}
+                  exit={{ opacity: 0 }}
+                  transition={{ duration: 0.2 }}
+                  className="fixed inset-0 top-0 z-[9998] bg-black/70 md:hidden"
+                  aria-hidden
+                  onClick={closeMobile}
+                />
+                <motion.nav
+                  initial={{ opacity: 0, x: 20 }}
+                  animate={{ opacity: 1, x: 0 }}
+                  exit={{ opacity: 0, x: 20 }}
+                  transition={{ duration: 0.2, ease: "easeOut" }}
+                  className="fixed right-0 top-0 z-[9999] flex h-full w-full max-w-[280px] flex-col gap-0 border-l-2 border-[hsl(var(--primary))]/50 p-6 pt-[5.5rem] shadow-2xl md:hidden"
+                  style={{ backgroundColor: "hsl(222, 14%, 16%)", color: "#ffffff" }}
+                  aria-label="Mobile menu"
+                >
+                  <Link href="/" className="rounded-lg px-4 py-3.5 text-base font-medium text-white hover:bg-white/15" onClick={closeMobile}>
+                    Home
+                  </Link>
+                  <Link href="/services" className="rounded-lg px-4 py-3.5 text-base font-medium text-white hover:bg-white/15" onClick={closeMobile}>
+                    Services
+                  </Link>
+                  <Link href="/about" className="rounded-lg px-4 py-3.5 text-base font-medium text-white hover:bg-white/15" onClick={closeMobile}>
+                    About
+                  </Link>
+                  <Link href="/app/governance" className="rounded-lg px-4 py-3.5 text-base font-medium text-white hover:bg-white/15" onClick={closeMobile}>
+                    $CITRA
+                  </Link>
+                  <Link
+                    href="/app/dashboard"
+                    className="mt-4 inline-flex items-center justify-center gap-2 rounded-xl bg-[hsl(var(--primary))] px-4 py-3.5 text-base font-semibold text-white sm:hidden"
+                    onClick={closeMobile}
+                  >
+                    Get Started
+                    <ArrowRight className="size-4" />
+                  </Link>
+                </motion.nav>
+              </>
+            )}
+          </AnimatePresence>,
+          document.body
         )}
-      </AnimatePresence>
-      <AnimatePresence>
-        {mobileOpen && (
-          <motion.nav
-            initial={{ opacity: 0, x: 20 }}
-            animate={{ opacity: 1, x: 0 }}
-            exit={{ opacity: 0, x: 20 }}
-            transition={{ duration: 0.2, ease: "easeOut" }}
-            className="fixed right-0 top-[73px] z-50 flex w-full max-w-[280px] flex-col gap-0 border-l-2 border-white/20 bg-[hsl(222_12%_14%)] p-4 shadow-2xl md:hidden"
-            aria-label="Mobile menu"
-          >
-            <Link href="/" className="rounded-lg px-4 py-3.5 text-base font-medium text-white hover:bg-white/10" onClick={closeMobile}>
-              Home
-            </Link>
-            <Link href="/services" className="rounded-lg px-4 py-3.5 text-base font-medium text-white hover:bg-white/10" onClick={closeMobile}>
-              Services
-            </Link>
-            <Link href="/about" className="rounded-lg px-4 py-3.5 text-base font-medium text-white hover:bg-white/10" onClick={closeMobile}>
-              About
-            </Link>
-            <Link href="/app/governance" className="rounded-lg px-4 py-3.5 text-base font-medium text-white hover:bg-white/10" onClick={closeMobile}>
-              $CITRA
-            </Link>
-            <Link
-              href="/app/dashboard"
-              className="mt-3 inline-flex items-center justify-center gap-2 rounded-xl bg-[hsl(var(--primary))] px-4 py-3.5 text-base font-semibold text-white sm:hidden"
-              onClick={closeMobile}
-            >
-              Get Started
-              <ArrowRight className="size-4" />
-            </Link>
-          </motion.nav>
-        )}
-      </AnimatePresence>
     </header>
   );
 }
