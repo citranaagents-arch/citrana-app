@@ -4,8 +4,9 @@ import { usePathname } from "next/navigation";
 import { motion, AnimatePresence } from "framer-motion";
 import { useReducedMotion } from "framer-motion";
 
+/* Initial opacity 1 so content is visible on first load (Vercel/SSR); no blank flash before JS runs */
 const variants = {
-  initial: { opacity: 0, scale: 0.98 },
+  initial: { opacity: 1, scale: 0.99 },
   animate: { opacity: 1, scale: 1 },
   exit: { opacity: 0, scale: 0.99 },
 };
