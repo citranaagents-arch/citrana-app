@@ -1,7 +1,6 @@
 import type { Metadata } from "next";
 import { Space_Grotesk, Inter, JetBrains_Mono } from "next/font/google";
 import "./globals.css";
-import { RouteTransition } from "@/components/layout/RouteTransition";
 
 const spaceGrotesk = Space_Grotesk({
   variable: "--font-sans",
@@ -41,7 +40,7 @@ export default function RootLayout({
       <body
         className={`${spaceGrotesk.variable} ${inter.variable} ${jetbrainsMono.variable} antialiased`}
       >
-        <RouteTransition>{children}</RouteTransition>
+        {children}
       </body>
     </html>
   );

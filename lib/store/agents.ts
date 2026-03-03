@@ -48,7 +48,7 @@ const defaultStats: DashboardStats = {
 };
 
 /* Deterministic timestamps (no Date.now) to avoid hydration mismatch between server and client */
-const BASE_MS = 1709251200000; // Fixed epoch for consistent SSR/client output
+const BASE_MS = 1740787200000; // 2025-03-01 00:00 UTC — recent so "Last: 12m ago" etc. stays sensible
 const defaultAgents: Agent[] = [
   {
     id: "1",
