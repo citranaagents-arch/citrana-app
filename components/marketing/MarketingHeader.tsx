@@ -60,7 +60,7 @@ export function MarketingHeader() {
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
             transition={{ duration: 0.2 }}
-            className="fixed inset-0 top-[73px] z-40 bg-[hsl(var(--background))]/95 backdrop-blur-sm md:hidden"
+            className="fixed inset-0 top-[73px] z-40 bg-black/60 md:hidden"
             aria-hidden
             onClick={closeMobile}
           />
@@ -73,24 +73,24 @@ export function MarketingHeader() {
             animate={{ opacity: 1, x: 0 }}
             exit={{ opacity: 0, x: 20 }}
             transition={{ duration: 0.2, ease: "easeOut" }}
-            className="fixed right-0 top-[73px] z-50 flex w-full max-w-[280px] flex-col gap-1 border-l border-[hsl(var(--border))] bg-[hsl(var(--background-elevated))] p-4 shadow-xl md:hidden"
+            className="fixed right-0 top-[73px] z-50 flex w-full max-w-[280px] flex-col gap-0 border-l-2 border-white/20 bg-[hsl(222_12%_14%)] p-4 shadow-2xl md:hidden"
             aria-label="Mobile menu"
           >
-            <Link href="/" className="rounded-lg px-4 py-3 text-sm font-medium text-[hsl(var(--foreground))] hover:bg-[hsl(var(--surface-hover))]" onClick={closeMobile}>
+            <Link href="/" className="rounded-lg px-4 py-3.5 text-base font-medium text-white hover:bg-white/10" onClick={closeMobile}>
               Home
             </Link>
-            <Link href="/services" className="rounded-lg px-4 py-3 text-sm font-medium text-[hsl(var(--foreground))] hover:bg-[hsl(var(--surface-hover))]" onClick={closeMobile}>
+            <Link href="/services" className="rounded-lg px-4 py-3.5 text-base font-medium text-white hover:bg-white/10" onClick={closeMobile}>
               Services
             </Link>
-            <Link href="/about" className="rounded-lg px-4 py-3 text-sm font-medium text-[hsl(var(--foreground))] hover:bg-[hsl(var(--surface-hover))]" onClick={closeMobile}>
+            <Link href="/about" className="rounded-lg px-4 py-3.5 text-base font-medium text-white hover:bg-white/10" onClick={closeMobile}>
               About
             </Link>
-            <Link href="/app/governance" className="rounded-lg px-4 py-3 text-sm font-medium text-[hsl(var(--foreground))] hover:bg-[hsl(var(--surface-hover))]" onClick={closeMobile}>
+            <Link href="/app/governance" className="rounded-lg px-4 py-3.5 text-base font-medium text-white hover:bg-white/10" onClick={closeMobile}>
               $CITRA
             </Link>
             <Link
               href="/app/dashboard"
-              className="mt-2 inline-flex items-center justify-center gap-2 rounded-xl bg-[hsl(var(--primary))] px-4 py-3 text-sm font-medium text-white sm:hidden"
+              className="mt-3 inline-flex items-center justify-center gap-2 rounded-xl bg-[hsl(var(--primary))] px-4 py-3.5 text-base font-semibold text-white sm:hidden"
               onClick={closeMobile}
             >
               Get Started
