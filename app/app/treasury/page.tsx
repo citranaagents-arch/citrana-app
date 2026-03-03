@@ -1,8 +1,9 @@
 "use client";
 
 import { motion } from "framer-motion";
-import { Landmark, TrendingUp, Zap, Bot, PieChart } from "lucide-react";
+import { Landmark, TrendingUp, Bot, PieChart } from "lucide-react";
 import { KpiCard } from "@/components/citrana/KpiCard";
+import { PageHeader } from "@/components/citrana/PageHeader";
 
 const chains = [
   { name: "Ethereum", balance: "$78,240", change: "+1.8%", color: "hsl(var(--primary))" },
@@ -29,15 +30,11 @@ const agentContributions = [
 
 export default function TreasuryPage() {
   return (
-    <div className="space-y-8">
-      <header>
-        <h1 className="text-2xl font-semibold tracking-tight text-[hsl(var(--foreground))] md:text-3xl">
-          Treasury
-        </h1>
-        <p className="mt-1 text-[hsl(var(--foreground-muted))]">
-          Portfolio and asset overview across chains.
-        </p>
-      </header>
+    <div className="space-y-6">
+      <PageHeader
+        title="Treasury"
+        description="Portfolio and asset overview across chains."
+      />
 
       <section>
         <h2 className="mb-4 text-sm font-semibold uppercase tracking-wider text-[hsl(var(--foreground-muted))]">
@@ -77,7 +74,7 @@ export default function TreasuryPage() {
         </div>
       </section>
 
-      <div className="grid gap-6 lg:grid-cols-2">
+      <div className="grid gap-5 lg:grid-cols-2">
         <motion.section
           initial={{ opacity: 1, y: 10 }}
           animate={{ opacity: 1, y: 0 }}

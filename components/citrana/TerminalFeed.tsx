@@ -50,7 +50,7 @@ export function TerminalFeed({ maxItems = 20 }: { maxItems?: number }) {
           <span className="text-[hsl(var(--error))]">Failed: {failed}</span>
         </div>
       </div>
-      <div className="max-h-[420px] overflow-y-auto px-4 py-2">
+      <div className="hide-scrollbar max-h-[420px] overflow-y-auto px-4 py-2">
         <AnimatePresence initial={false}>
           {list.length === 0 ? (
             <p className="py-8 text-center text-sm text-[hsl(var(--foreground-muted))]">

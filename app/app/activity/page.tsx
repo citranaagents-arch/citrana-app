@@ -3,6 +3,7 @@
 import { motion } from "framer-motion";
 import { Activity, Bell, Sliders } from "lucide-react";
 import { TerminalFeed } from "@/components/citrana/TerminalFeed";
+import { PageHeader } from "@/components/citrana/PageHeader";
 
 const monitoredConditions = [
   { id: "1", label: "Gas below 25 gwei", value: "18 gwei", status: "ok" },
@@ -18,17 +19,13 @@ const recentAlerts = [
 
 export default function ActivityPage() {
   return (
-    <div className="space-y-8">
-      <header>
-        <h1 className="text-2xl font-semibold tracking-tight text-[hsl(var(--foreground))] md:text-3xl">
-          Activity Monitor
-        </h1>
-        <p className="mt-1 text-[hsl(var(--foreground-muted))]">
-          Live execution feed, condition monitoring, and verification.
-        </p>
-      </header>
+    <div className="space-y-6">
+      <PageHeader
+        title="Activity Monitor"
+        description="Live execution feed, condition monitoring, and verification."
+      />
 
-      <div className="grid gap-6 lg:grid-cols-2">
+      <div className="grid gap-5 lg:grid-cols-2">
         <motion.section
           initial={{ opacity: 1, y: 8 }}
           animate={{ opacity: 1, y: 0 }}

@@ -1,7 +1,7 @@
 @import "tailwindcss";
 
 /* ---------------------------------------------------------------------------
-   Citrana design system — CSS variables (dark default, neon accents)
+   Citrana design system — CSS variables (dark default, orange + green logo palette)
    --------------------------------------------------------------------------- */
 :root {
   /* Backgrounds — solid, no transparency (no dimming) */
@@ -18,10 +18,10 @@
   --primary: 25 95% 53%;
   --primary-foreground: 0 0% 100%;
   --primary-glow: 25 95% 53% / 0.25;
-  /* Accent — Electric Blue */
-  --accent: 210 100% 56%;
+  /* Accent — Leaf Green (logo-aligned) */
+  --accent: 142 70% 45%;
   --accent-foreground: 0 0% 100%;
-  --accent-glow: 210 100% 56% / 0.2;
+  --accent-glow: 142 70% 45% / 0.2;
   /* Semantic */
   --success: 142 76% 42%;
   --success-glow: 142 76% 42% / 0.25;
@@ -60,9 +60,17 @@
 }
 
 /* ---------------------------------------------------------------------------
-   Base
+   Base — single scrollbar, no blink (native document scroll only)
    --------------------------------------------------------------------------- */
+html {
+  overflow-x: hidden;
+  overflow-y: scroll; /* always show = no blink from layout shifts */
+  scrollbar-gutter: stable;
+}
 body {
+  margin: 0;
+  overflow-x: hidden;
+  min-height: 100vh;
   background: hsl(var(--background));
   color: hsl(var(--foreground));
   font-family: var(--font-body), system-ui, sans-serif;
@@ -70,6 +78,17 @@ body {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   text-rendering: optimizeLegibility;
+}
+
+/* Hide scrollbar on nested scroll areas */
+.sidebar-nav-scroll,
+.hide-scrollbar {
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+}
+.sidebar-nav-scroll::-webkit-scrollbar,
+.hide-scrollbar::-webkit-scrollbar {
+  display: none;
 }
 
 h1, h2, h3, h4, h5, h6 {
@@ -98,7 +117,7 @@ h1, h2, h3, h4, h5, h6 {
   transition: box-shadow 0.2s ease, border-color 0.2s ease;
 }
 .glass-panel:hover {
-  border-color: hsl(var(--border));
+  border-color: hsl(var(--primary) / 0.2);
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.25);
 }
 
@@ -228,6 +247,14 @@ h1, h2, h3, h4, h5, h6 {
 .landing-section {
   scroll-margin-top: 2rem;
 }
+/* Scroll hint — CSS-only, no layout reflow */
+@keyframes scroll-hint-bounce {
+  0%, 100% { transform: translateY(0); opacity: 0.7; }
+  50% { transform: translateY(6px); opacity: 1; }
+}
+.scroll-hint {
+  animation: scroll-hint-bounce 2s ease-in-out infinite;
+}
 
 /* Focus visible for accessibility and polish */
 a:focus-visible,
@@ -235,6 +262,137 @@ button:focus-visible,
 [tabindex]:focus-visible {
   outline: 2px solid hsl(var(--primary));
   outline-offset: 2px;
+}
+
+/* Ambient background — slow floating particles */
+@keyframes ambient-float {
+  0%, 100% { transform: translate(0, 0) scale(1); }
+  25% { transform: translate(15px, -20px) scale(1.1); }
+  50% { transform: translate(-10px, -35px) scale(0.95); }
+  75% { transform: translate(20px, -15px) scale(1.05); }
+}
+.animate-ambient-float {
+  animation: ambient-float 20s ease-in-out infinite;
+}
+
+/* Hero gradient blob — slow drift */
+@keyframes gradient-blob {
+  0%, 100% { transform: translate(0, 0) scale(1); }
+  33% { transform: translate(30px, -20px) scale(1.05); }
+  66% { transform: translate(-20px, 25px) scale(0.98); }
+}
+.animate-gradient-blob {
+  animation: gradient-blob 15s ease-in-out infinite;
+}
+
+/* Marquee — GPU-accelerated with fade edges */
+@keyframes marquee {
+  0% { transform: translateX(0); }
+  100% { transform: translateX(-50%); }
+}
+.marquee-wrap {
+  mask-image: linear-gradient(to right, transparent 0%, black 8%, black 92%, transparent 100%);
+  -webkit-mask-image: linear-gradient(to right, transparent 0%, black 8%, black 92%, transparent 100%);
+}
+
+/* Glassmorphic — hero badge and cards */
+.glass-badge {
+  box-shadow: 0 0 0 1px hsl(var(--primary) / 0.08);
+}
+.glass-panel-card {
+  box-shadow: 0 0 0 1px hsl(var(--border) / 0.5), 0 4px 24px -8px rgba(0, 0, 0, 0.3);
+}
+
+/* Nav link underline slide */
+.nav-link-underline::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  bottom: -2px;
+  width: 100%;
+  height: 1px;
+  background: hsl(var(--primary));
+  transform: scaleX(0);
+  transform-origin: right;
+  transition: transform 0.25s ease;
+}
+.nav-link-underline:hover::after {
+  transform: scaleX(1);
+  transform-origin: left;
+}
+
+/* Card hover glow */
+.card-hover-glow {
+  transition: box-shadow 0.3s ease, transform 0.3s ease, border-color 0.3s ease;
+}
+.card-hover-glow:hover {
+  box-shadow: 0 20px 40px -12px rgba(0,0,0,0.4), 0 0 0 1px hsl(var(--primary) / 0.15);
+}
+
+/* Button primary hover */
+.btn-primary-glow {
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+.btn-primary-glow:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 12px 28px -8px hsl(var(--primary) / 0.4);
+}
+
+/* CTA ripple effect on tap */
+.btn-ripple {
+  position: relative;
+  overflow: hidden;
+}
+.btn-ripple::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(circle at center, rgba(255,255,255,0.3) 0%, transparent 70%);
+  transform: scale(0);
+  opacity: 0;
+  transition: transform 0.5s ease-out, opacity 0.3s ease;
+}
+.btn-ripple:active::after {
+  transform: scale(2);
+  opacity: 1;
+  transition: transform 0s, opacity 0s;
+}
+
+/* Hero headline gradient text — subtle shine */
+@keyframes hero-shine {
+  0% { background-position: 120% 50%; }
+  100% { background-position: -20% 50%; }
+}
+.hero-gradient-text {
+  background: linear-gradient(90deg, hsl(var(--foreground)) 0%, hsl(var(--primary)) 25%, hsl(var(--accent)) 50%, hsl(var(--primary)) 75%, hsl(var(--foreground)) 100%);
+  background-size: 200% auto;
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  animation: hero-shine 8s linear infinite;
+}
+@media (prefers-reduced-motion: reduce) {
+  .hero-gradient-text {
+    animation: none;
+    background: hsl(var(--foreground));
+    -webkit-text-fill-color: unset;
+  }
+}
+
+/* Input focus ring utility */
+.input-focus:focus {
+  outline: none;
+  border-color: hsl(var(--primary));
+  box-shadow: 0 0 0 2px hsl(var(--primary) / 0.2);
+}
+
+/* Skeleton loading pulse */
+@keyframes skeleton-pulse {
+  0%, 100% { opacity: 0.6; }
+  50% { opacity: 1; }
+}
+.animate-skeleton-pulse {
+  animation: skeleton-pulse 1.5s ease-in-out infinite;
 }
 
 /* Reduced motion */
@@ -250,7 +408,19 @@ button:focus-visible,
   .landing-float,
   .landing-shimmer,
   .landing-badge-pulse,
-  .landing-arrow-bounce {
+  .landing-arrow-bounce,
+  .scroll-hint {
     animation: none !important;
+  }
+  [style*="animation: marquee"] {
+    animation: none !important;
+  }
+  .animate-ambient-float,
+  .animate-gradient-blob {
+    animation: none !important;
+  }
+  .animate-skeleton-pulse {
+    animation: none !important;
+    opacity: 0.7;
   }
 }

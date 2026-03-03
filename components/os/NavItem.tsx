@@ -15,7 +15,7 @@ interface NavItemProps {
 export function NavItem({ href, label, icon: Icon }: NavItemProps) {
   const pathname = usePathname();
   const isActive =
-    pathname === href || (href !== "/app" && pathname.startsWith(href));
+    pathname === href || (href !== "/" && href !== "/app" && pathname.startsWith(href));
 
   return (
     <Link

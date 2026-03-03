@@ -6,6 +6,7 @@ import { AgentCard } from "@/components/citrana/AgentCard";
 import { ExecutionTimeline } from "@/components/citrana/ExecutionTimeline";
 import { SystemStatusPanel } from "@/components/citrana/SystemStatusPanel";
 import { PortfolioOverview } from "@/components/citrana/PortfolioOverview";
+import { PageHeader } from "@/components/citrana/PageHeader";
 
 export default function DashboardPage() {
   const stats = useAgentsStore((s) => s.stats);
@@ -14,15 +15,11 @@ export default function DashboardPage() {
   const activeAgents = agents.filter((a) => a.status === "active");
 
   return (
-    <div className="space-y-8">
-      <header>
-        <h1 className="text-2xl font-semibold tracking-tight text-[hsl(var(--foreground))] md:text-3xl" style={{ fontFamily: "var(--font-sans), system-ui, sans-serif" }}>
-          Dashboard
-        </h1>
-        <p className="mt-1 text-[hsl(var(--foreground-muted))]">
-          Your autonomous intelligence layer — system overview and live agent activity.
-        </p>
-      </header>
+    <div className="space-y-6">
+      <PageHeader
+        title="Dashboard"
+        description="Your autonomous intelligence layer — system overview and live agent activity."
+      />
 
       <SystemStatusPanel />
 
@@ -59,7 +56,7 @@ export default function DashboardPage() {
         </div>
       </section>
 
-      <div className="grid gap-6 lg:grid-cols-3">
+      <div className="grid gap-5 lg:grid-cols-3">
         <section className="lg:col-span-1">
           <PortfolioOverview />
         </section>

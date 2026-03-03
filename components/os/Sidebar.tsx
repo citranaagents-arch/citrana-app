@@ -12,11 +12,13 @@ import {
   Store,
   Vote,
   Settings,
+  Home,
 } from "lucide-react";
 import { NavItem } from "./NavItem";
 import { cn } from "@/lib/utils";
 
 const navItems = [
+  { href: "/", label: "Home", icon: Home },
   { href: "/app/dashboard", label: "Dashboard", icon: LayoutDashboard },
   { href: "/app/agents", label: "Agents", icon: Bot },
   { href: "/app/intent-studio", label: "Intent Studio", icon: Lightbulb },
@@ -76,7 +78,7 @@ export function Sidebar({ mobileOpen, onClose }: SidebarProps) {
             <X className="size-5" />
           </button>
         </div>
-        <nav className="flex-1 space-y-1 overflow-y-auto p-3">
+        <nav className="sidebar-nav-scroll flex-1 space-y-1 overflow-y-auto p-3">
           {navItems.map((item) => (
             <div key={item.href} onClick={onClose}>
               <NavItem

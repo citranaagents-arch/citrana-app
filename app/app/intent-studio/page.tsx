@@ -6,6 +6,7 @@ import { Send, Sparkles, Zap, Network, AlertTriangle } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { RiskSlider } from "@/components/citrana/RiskSlider";
 import { TriggerBuilder, type TriggerCondition } from "@/components/citrana/TriggerBuilder";
+import { PageHeader } from "@/components/citrana/PageHeader";
 import type { AgentType } from "@/lib/store/agents";
 
 const EXAMPLE_INTENTS = [
@@ -63,16 +64,11 @@ export default function IntentStudioPage() {
   };
 
   return (
-    <div className="mx-auto max-w-3xl space-y-8">
-      <header>
-        <h1 className="text-2xl font-semibold tracking-tight md:text-3xl">
-          Intent Studio
-        </h1>
-        <p className="mt-1 text-[hsl(var(--foreground-muted))]">
-          Create automation using natural language. The AI converts your intent
-          into an executable workflow.
-        </p>
-      </header>
+    <div className="mx-auto max-w-3xl space-y-6">
+      <PageHeader
+        title="Intent Studio"
+        description="Create automation using natural language. The AI converts your intent into an executable workflow."
+      />
 
       <div className="glass-panel rounded-xl p-4 md:p-6">
         <label className="mb-2 block text-sm font-medium text-[hsl(var(--foreground))]">
@@ -82,7 +78,7 @@ export default function IntentStudioPage() {
           value={prompt}
           onChange={(e) => setPrompt(e.target.value)}
           placeholder="e.g. Optimize my ETH portfolio with moderate risk."
-          className="w-full resize-none rounded-lg border border-[hsl(var(--border))] bg-[hsl(var(--surface))] px-4 py-3 text-[hsl(var(--foreground))] placeholder:text-[hsl(var(--foreground-subtle))] focus:border-[hsl(var(--primary))] focus:outline-none focus:ring-2 focus:ring-[hsl(var(--primary))]/20"
+          className="input-focus w-full min-h-[100px] resize-none rounded-lg border border-[hsl(var(--border))] bg-[hsl(var(--surface))] px-4 py-3 text-[hsl(var(--foreground))] placeholder:text-[hsl(var(--foreground-subtle))] focus:border-[hsl(var(--primary))] focus:outline-none focus:ring-2 focus:ring-[hsl(var(--primary))]/20"
           rows={3}
         />
         <div className="mt-2 flex flex-wrap gap-2">
